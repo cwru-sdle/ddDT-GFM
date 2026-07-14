@@ -1,4 +1,4 @@
-# graphfoundationmodels
+# ddDT-GFM
 ## Data-driven Digital Twins: Generalized Foundation Models for Fleet Level System Performance Prediction, Advanced Manufacturing Tool and Part Qualification, Conformance, and Lifetime
 
 ## Abstract
@@ -20,6 +20,6 @@ Although these three systems are conceptually very different, the presented Foun
 You can download the data used in this work from OSF with the `util` module of this package. 
 For example, to download a PV site:
 ```py
-from graphfoundationmodels.util.io import OSF_download
+from dddt_gfm.util.io import OSF_download
 OSF_download(0, 'downloaded_test.csv', './')
 ```

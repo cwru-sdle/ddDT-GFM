@@ -1,31 +1,76 @@
 [build-system]
-requires = ["setuptools>=61.0", "torch"]
+requires = ["setuptools>=64", "setuptools_scm>=8"]
 build-backend = "setuptools.build_meta"
 
-
 [project]
-name = "graphfoundationmodels"
-dependencies = [
-    'numpy',
-    'pandas',
-    'torch',
-    'tsl',
-    'pytorch_lightning',
-    'torchvision',
-    'torch_geometric',
-    'torch-spatiotemporal',
-    'torch_sparse'
-]
+name = "ddDT-GFM"
+description = "Data-driven Foundation Models for fleet-level system performance prediction using spatiotemporal graph neural networks."
 readme = "README.md"
-license = {file = "LICENSE"}
-authors = [{ name = "Ben Pierce", email = "pierce@case.edu" }]
-version = "2024.07.03"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Benjamin G. Pierce" },
+    { name = "Raymond J. Wieser" },
+    { name = "Weiqi Yue" },
+    { name = "Yangxin Fan" },
+    { name = "Hein Htet Aung" },
+    { name = "Thomas G. Ciardi" },
+    { name = "Yinghui Wu" },
+    { name = "Pawan K. Tripathi", email = "pawan.tripathi@case.edu" },
+    { name = "Roger H. French", email = "rxf131@case.edu" },
+]
+requires-python = ">=3.9"
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "scikit-learn",
+    "matplotlib",
+    "seaborn",
+    "tqdm",
+    "requests",
+    "torch",
+    "torchvision",
+    "pytorch_lightning",
+]
 
+# The PyTorch Geometric stack (torch_geometric / torch_sparse / tsl) often
+# needs version-matched wheels for your torch + CUDA build and does not always
+# `pip install` cleanly from PyPI. It is therefore kept out of the core
+# dependencies. Install it with:  pip install "ddDT-GFM[full]"
+# See https://pytorch-geometric.readthedocs.io/en/latest/install/installation.html
 [project.optional-dependencies]
+full = [
+    "torch_geometric",
+    "torch_sparse",
+    "torch-spatiotemporal",  # provides the `tsl` import
+]
 test = ["pytest"]
+docs = [
+    "sphinx>=7",
+    "furo",
+    "sphinx-autodoc-typehints",
+]
 
+[project.urls]
+Homepage = "https://github.com/cwru-sdle/ddDT-GFM"
+Repository = "https://github.com/cwru-sdle/ddDT-GFM"
+Documentation = "https://dddt-gfm.readthedocs.io"
 
 [tool.setuptools.packages.find]
-include = ["graphfoundationmodels*"]
+include = ["dddt_gfm*"]
 
 [tool.setuptools_scm]
+fallback_version = "0.0.0"

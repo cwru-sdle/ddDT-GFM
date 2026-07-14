@@ -38,7 +38,7 @@ try:
     from tqdm import tqdm
     #from rwb_stgnn_functions import *
     #from rwb_dataloader_sunsmart import *
-    from graphfoundationmodels.models.stGAE import STConvAE
+    from dddt_gfm.models.stGAE import STConvAE
     import matplotlib.pyplot as plt
     import seaborn as sns
 

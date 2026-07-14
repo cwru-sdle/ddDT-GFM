@@ -13,8 +13,8 @@ import torch
 # from tsl.data.datamodule import SpatioTemporalDataModule, TemporalSplitter
 
 #from model import STConvAE
-#from graphfoundationmodels.models.stGAE import STConvAE
-#from graphfoundationmodels.dataloaders.dataloader_DIW import DIWDataset
+#from dddt_gfm.models.stGAE import STConvAE
+#from dddt_gfm.dataloaders.dataloader_DIW import DIWDataset
 
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import Callback, ModelCheckpoint
