@@ -7,6 +7,10 @@ name = "ddDT-GFM"
 description = "Data-driven Foundation Models for fleet-level system performance prediction using spatiotemporal graph neural networks."
 readme = "README.md"
 license = { file = "LICENSE" }
+# All authors are listed name-only so they render uniformly in PyPI's
+# "Author" field. Contact emails are kept under maintainers (setuptools
+# routes any author WITH an email into the separate Author-email field,
+# which PyPI displays inconsistently — hence names-only here).
 authors = [
     { name = "Benjamin G. Pierce" },
     { name = "Raymond J. Wieser" },
@@ -15,6 +19,10 @@ authors = [
     { name = "Hein Htet Aung" },
     { name = "Thomas G. Ciardi" },
     { name = "Yinghui Wu" },
+    { name = "Pawan K. Tripathi" },
+    { name = "Roger H. French" },
+]
+maintainers = [
     { name = "Pawan K. Tripathi", email = "pawan.tripathi@case.edu" },
     { name = "Roger H. French", email = "rxf131@case.edu" },
 ]
