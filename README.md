@@ -44,3 +44,19 @@ For example, to download a PV site:
 from dddt_gfm.util.io import OSF_download
 OSF_download(0, 'downloaded_test.csv', './')
 ```
+
+## Citation
+
+If you use this software, please cite the accompanying paper:
+
+> Pierce, B. G., Aung, H. H., Ciardi, T. G., Hernandez, K. J., Wieser, R. J., Yue, W., Fan, Y., Harding Bradley, A. C., Rajamohan, B. P., Barcelos, E. I., Jimenez, J. C., Spears, B. K., Giera, B., Gao, R. X., Li, M., Davis, K. O., Bruckman, L. S., Wu, Y., Tripathi, P. K., & French, R. H. Generalized graph foundation models as versatile data-driven digital twins for complex technological systems. *Scientific Reports* (2026). DOI: _to be added upon publication_.
+
+```bibtex
+@article{pierce2026ddltgfm,
+  title   = {Generalized graph foundation models as versatile data-driven digital twins for complex technological systems},
+  author  = {Pierce, Benjamin G. and Aung, Hein Htet and Ciardi, Thomas G. and Hernandez, Kristen J. and Wieser, Raymond J. and Yue, Weiqi and Fan, Yangxin and Harding Bradley, Alexander C. and Rajamohan, Balashanmuga Priyan and Barcelos, Erika I. and Jimenez, Jayvic C. and Spears, Brian K. and Giera, Brian and Gao, Robert X. and Li, Mengjie and Davis, Kristopher O. and Bruckman, Laura S. and Wu, Yinghui and Tripathi, Pawan K. and French, Roger H.},
+  journal = {Scientific Reports},
+  year    = {2026},
+  note    = {DOI to be added upon publication}
+}
+```
