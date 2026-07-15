@@ -1,5 +1,26 @@
 # ddDT-GFM
-## Data-driven Digital Twins: Generalized Foundation Models for Fleet Level System Performance Prediction, Advanced Manufacturing Tool and Part Qualification, Conformance, and Lifetime
+## Generalized graph foundation models as versatile data-driven digital twins for complex technological systems
+
+[![PyPI version](https://img.shields.io/pypi/v/ddDT-GFM.svg)](https://pypi.org/project/ddDT-GFM/)
+[![Python versions](https://img.shields.io/pypi/pyversions/ddDT-GFM.svg)](https://pypi.org/project/ddDT-GFM/)
+[![Documentation Status](https://readthedocs.org/projects/dddt-gfm/badge/?version=latest)](https://dddt-gfm.readthedocs.io/en/latest/)
+[![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD--2--Clause-blue.svg)](LICENSE)
+
+## Installation
+
+```bash
+pip install ddDT-GFM
+```
+
+The models and dataloaders additionally depend on the PyTorch Geometric stack
+(`torch_geometric`, `torch_sparse`, `torch-spatiotemporal`), which often needs
+wheels matched to your `torch`/CUDA build. Install those via the optional extra:
+
+```bash
+pip install "ddDT-GFM[full]"
+```
+
+See the [documentation](https://dddt-gfm.readthedocs.io) for details.
 
 ## Abstract
 Digital twins are comprised of computational models that mimic the 'as built' characteristics of devices, systems, and networks of systems whose performance in the real world warrants quantitative and critical assessment. 
