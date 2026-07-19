@@ -41,7 +41,8 @@ class DIWDataset(ImputationDataset):
         target, connectivity_default, scaler = self._load_from_parquet(target_path)
         self.scaler = scaler
         if eval_mask is None:
-            eval_mask = torch.zeros_like(torch.from_numpy(target))
+            # mask must be boolean, not float64
+            eval_mask = torch.zeros_like(torch.from_numpy(target), dtype=torch.bool)
         if connectivity is None:
             connectivity = connectivity_default
         super(DIWDataset, self).__init__(target,
@@ -116,4 +117,6 @@ class DIWDataset(ImputationDataset):
         scaler.fit(node_ftr)
         node_ftr = scaler.transform(node_ftr)
 
-        return node_ftr, adj_matrix, scaler
+        # Force float32 so downstream tensors match the (float32) model weights.
+        # numpy/pandas default to float64, which triggers dtype mismatch errors.
+        return node_ftr.astype(np.float32), adj_matrix.astype(np.float32), scaler

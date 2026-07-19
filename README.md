@@ -8,17 +8,40 @@
 
 ## Installation
 
+Always install into an **isolated environment** (a fresh venv or conda env — never a shared base environment). **Linux is required** for the full pipeline; on **Python 3.10**.
+
+`tsl` (torch-spatiotemporal) requires `torch-sparse`/`torch-scatter`, which are distributed as wheels **matched to your torch + CUDA build** from the PyG index (not PyPI). Install torch first, then the matched extensions, then this package:
+
 ```bash
+python3.10 -m venv .venv && source .venv/bin/activate
+# 1) torch (choose your CUDA build; cu121 shown — use .../whl/cpu for CPU-only)
+pip install "setuptools<81" "numpy<2" torch==2.1.2 torchvision==0.16.2 \
+    --index-url https://download.pytorch.org/whl/cu121
+# 2) PyG extensions matched to torch 2.1 + cu121  (this match is what fixes the
+#    "libcudart.so.11 / incompatible CUDA" errors seen on mismatched installs)
+pip install torch-scatter torch-sparse -f https://data.pyg.org/whl/torch-2.1.0+cu121.html
+# 3) the package
 pip install ddDT-GFM
 ```
 
-The models and dataloaders additionally depend on the PyTorch Geometric stack
-(`torch_geometric`, `torch_sparse`, `torch-spatiotemporal`), which often needs
-wheels matched to your `torch`/CUDA build. Install those via the optional extra:
+> **Notes.** `setuptools<81` is required (pytorch-lightning imports `pkg_resources`, removed in setuptools 81). `numpy<2` is required (torch 2.1/2.2 are not ABI-compatible with numpy 2). **macOS has no prebuilt `torch_sparse` wheel** — use Linux or the Docker image below.
+
+### Reproducible environment (exact validated versions)
+
+For a guaranteed-identical setup — the versions used in the paper (Python 3.10, torch 2.1.2 + CUDA 12.1) — use one of:
 
 ```bash
-pip install "ddDT-GFM[full]"
+# pip + lockfile (GPU); use requirements-lock-cpu.txt for CPU-only
+pip install -r requirements-lock-cu121.txt && pip install ddDT-GFM
+
+# conda
+conda env create -f environment.yml && conda activate dddt-gfm
+
+# Docker (host needs only an NVIDIA driver >= 525)
+docker build -t dddt-gfm:0.2.0 . && docker run --gpus all -it -p 8888:8888 dddt-gfm:0.2.0
 ```
+
+The demo notebooks in [`notebooks/`](notebooks/) each begin with a pinned **Setup** cell, so they run reproducibly on Colab or a fresh machine without any prior setup.
 
 See the [documentation](https://dddt-gfm.readthedocs.io) for details.
 

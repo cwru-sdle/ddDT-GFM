@@ -1,0 +1,31 @@
+# Reproducible CPU-only environment for ddDT-GFM (Linux).
+# For reviewers without a GPU. NOTE: the PyG index below serves manylinux
+# wheels for torch-scatter/torch-sparse — this file targets LINUX. macOS has
+# no prebuilt torch_sparse wheel; on a Mac use the provided Docker image.
+#
+# Usage (isolated env):
+#   python3.10 -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements-lock-cpu.txt
+#   pip install ddDT-GFM
+--extra-index-url https://download.pytorch.org/whl/cpu
+-f https://data.pyg.org/whl/torch-2.1.0+cpu.html
+
+setuptools<81
+
+torch==2.1.2
+torchvision==0.16.2
+torch-scatter
+torch-sparse
+
+numpy==1.26.4
+pandas==2.3.3
+scipy==1.11.3
+scikit-learn==1.2.0
+matplotlib==3.10.1
+seaborn==0.11.2
+tqdm==4.65.1
+requests==2.32.3
+
+torch-geometric==2.7.0
+torch-spatiotemporal==0.9.5
+pytorch-lightning==2.2.1

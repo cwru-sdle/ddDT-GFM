@@ -26,7 +26,8 @@ maintainers = [
     { name = "Pawan K. Tripathi", email = "pawan.tripathi@case.edu" },
     { name = "Roger H. French", email = "rxf131@case.edu" },
 ]
-requires-python = ">=3.9"
+# Validated on Python 3.10; torch 2.1/2.2 have no cp312 wheels, so cap <3.12.
+requires-python = ">=3.9,<3.12"
 dynamic = ["version"]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -37,34 +38,41 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
+# Loose but *bounded* ranges: pip resolves the right wheel for the platform
+# (NVIDIA/ROCm/Intel/CPU) — torch is intentionally NOT pinned to a CUDA build.
+# Caps keep the resolver inside the validated island (torch 2.1.2 +
+# torch-geometric 2.7 + tsl 0.9.5, tested on Python 3.10 / CUDA 12.1).
+#
+# Two hard-won requirements captured here:
+#   * numpy<2   — torch 2.1/2.2 are not ABI-compatible with numpy 2.x.
+#   * setuptools<81 — pytorch-lightning 2.2.x imports `pkg_resources`, which
+#     setuptools 81 removed; fresh envs no longer ship setuptools at all.
+#
+# NOT declared here (they have no PyPI/macOS wheels and would source-build):
+# `torch-sparse` and `torch-scatter`. tsl 0.9.5 REQUIRES torch-sparse at import,
+# so install them from the CUDA/torch-matched PyG index BEFORE this package, e.g.
+#   pip install torch-scatter torch-sparse -f https://data.pyg.org/whl/torch-2.1.0+cu121.html
+# The demo notebooks, requirements-lock-*.txt, and the Dockerfile all do this.
 dependencies = [
-    "numpy",
-    "pandas",
-    "scipy",
-    "scikit-learn",
-    "matplotlib",
-    "seaborn",
-    "tqdm",
-    "requests",
-    "torch",
-    "torchvision",
-    "pytorch_lightning",
+    "numpy>=1.24,<2.0",
+    "pandas>=2.0",
+    "scipy>=1.10",
+    "scikit-learn>=1.2",
+    "matplotlib>=3.7",
+    "seaborn>=0.11",
+    "tqdm>=4.6",
+    "requests>=2.28",
+    "setuptools<81",
+    "torch>=2.1,<2.3",
+    "torchvision>=0.16,<0.18",
+    "torch-geometric>=2.5,<2.8",
+    "torch-spatiotemporal>=0.9,<0.10",  # provides the `tsl` import
+    "pytorch-lightning>=2.1,<2.3",
 ]
 
-# The PyTorch Geometric stack (torch_geometric / torch_sparse / tsl) often
-# needs version-matched wheels for your torch + CUDA build and does not always
-# `pip install` cleanly from PyPI. It is therefore kept out of the core
-# dependencies. Install it with:  pip install "ddDT-GFM[full]"
-# See https://pytorch-geometric.readthedocs.io/en/latest/install/installation.html
 [project.optional-dependencies]
-full = [
-    "torch_geometric",
-    "torch_sparse",
-    "torch-spatiotemporal",  # provides the `tsl` import
-]
 test = ["pytest"]
 docs = [
     "sphinx>=7",

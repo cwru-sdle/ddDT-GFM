@@ -1,0 +1,35 @@
+# Reproducible environment for ddDT-GFM — NVIDIA GPU, CUDA 12.1 (Linux).
+# Validated: Python 3.10, NVIDIA driver 570, Tesla V100-32GB, torch 2.1.2+cu121.
+#
+# Usage (isolated env — never a shared base env):
+#   python3.10 -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements-lock-cu121.txt
+#   pip install ddDT-GFM
+#
+# torch-scatter/torch-sparse come from the PyG index below, built to match
+# torch 2.1 + cu121 (a mismatch here was the original cross-device bug). They are
+# unpinned because that index serves exactly one wheel each for this torch/CUDA.
+# setuptools<81 is required: pytorch-lightning 2.2.x imports pkg_resources,
+# which setuptools 81 removed.
+--extra-index-url https://download.pytorch.org/whl/cu121
+-f https://data.pyg.org/whl/torch-2.1.0+cu121.html
+
+setuptools<81
+
+torch==2.1.2+cu121
+torchvision==0.16.2+cu121
+torch-scatter
+torch-sparse
+
+numpy==1.26.4
+pandas==2.3.3
+scipy==1.11.3
+scikit-learn==1.2.0
+matplotlib==3.10.1
+seaborn==0.11.2
+tqdm==4.65.1
+requests==2.32.3
+
+torch-geometric==2.7.0
+torch-spatiotemporal==0.9.5
+pytorch-lightning==2.2.1

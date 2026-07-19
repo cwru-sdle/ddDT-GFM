@@ -1,0 +1,30 @@
+# Reproducible conda environment for ddDT-GFM (NVIDIA GPU, CUDA 12.1).
+#   conda env create -f environment.yml
+#   conda activate dddt-gfm
+# conda provides the CUDA runtime via pytorch-cuda, so the host only needs a
+# compatible NVIDIA driver. For CPU-only, drop the pytorch-cuda line and use
+# the `cpuonly` package from the pytorch channel instead.
+name: dddt-gfm
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pytorch=2.1.2
+  - torchvision=0.16.2
+  - pytorch-cuda=12.1
+  - numpy=1.26.4
+  - pandas=2.3.3
+  - scipy=1.11.3
+  - scikit-learn=1.2.0
+  - matplotlib=3.10.1
+  - seaborn=0.11.2
+  - tqdm=4.65.1
+  - requests=2.32.3
+  - pip
+  - pip:
+      - torch-geometric==2.7.0
+      - torch-spatiotemporal==0.9.5
+      - pytorch-lightning==2.2.1
+      - ddDT-GFM
