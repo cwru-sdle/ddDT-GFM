@@ -1,6 +1,5 @@
 # %%
 ''' load libraries '''
-
 import random
 import numpy as np
 import pandas as pd
@@ -8,14 +7,12 @@ import matplotlib.pyplot as plt
 
 import torch
 from tsl.engines import Predictor
-from tsl.data import ImputationDataset
 from tsl.utils.casting import torch_to_numpy
 from tsl.ops.connectivity import adj_to_edge_index
 from tsl.metrics.torch import MaskedMSE, MaskedMAE, MaskedMAPE
 from tsl.data.preprocessing import MinMaxScaler
 from tsl.data.datamodule import SpatioTemporalDataModule, TemporalSplitter
 
-#from model import STConvAE
 from dddt_gfm.models.stGAE import STConvAE
 from dddt_gfm.dataloaders.dataloader_DIW import DIWDataset
 
@@ -25,32 +22,15 @@ from pytorch_lightning.callbacks import Callback, ModelCheckpoint
 device = torch.device('cuda')
 
 # %%
-''' load data and basic preprocessing '''
-
-#ADJ_MATRIX_PATH = '/mnt/vstor/CSE_MSE_RXF131/staging/mds3/llnl/DIW/2304giera-hdf5_cwru/adj_matrix_part_layer.npy'
-#NODE_FTR_PATH = '/mnt/vstor/CSE_MSE_RXF131/staging/mds3/llnl/DIW/2304giera-hdf5_cwru/node_ftr_all.npy'
-
-ADJ_MATRIX_PATH = '../adjacency_matrix/adj_matrix_part_layer.npy'
-NODE_FTR_PATH = '../data/node_ftr_all.npy'
-
-
-adj_matrix = np.load(ADJ_MATRIX_PATH)
-adj_matrix = adj_to_edge_index(adj_matrix)
-
-node_ftr = np.load(NODE_FTR_PATH)[:, :, :3]
-
-scaler = MinMaxScaler(axis=(0))
-scaler.fit(node_ftr)
-node_ftr = scaler.transform(node_ftr)
-
-# %%
 ''' dataset creation and preprocessing '''
 
-torch_dataset = DIWDataset(target=node_ftr,
-                                  eval_mask=torch.zeros_like(torch.from_numpy(node_ftr), dtype=torch.bool),
-                                  connectivity=adj_matrix,
-                                  window=250,
-                                  stride=25)
+DATA_PATH = '../data/diw-stgnn-featmat.parquet'
+
+torch_dataset = DIWDataset(target_path= DATA_PATH,
+                           eval_mask=None,
+                           connectivity=None,
+                           window=250,
+                           stride=25)
 
 splitter = TemporalSplitter(val_len=0.25, test_len=0.05)
 

@@ -32,7 +32,7 @@ class LossPlotCallback(Callback):
         if train_loss is not None:
             self.train_losses.append(train_loss.item())
         
-    def on_validation_epoch_end(self, training, pl_module):
+    def on_validation_epoch_end(self, trainer, pl_module):
         val_loss = trainer.logged_metrics.get('val_loss')
         if val_loss is not None:
             self.val_losses.append(val_loss.item())
