@@ -294,7 +294,11 @@ class STConvAE(torch.nn.Module):
         for layer in self.layers:
             layer = layer.to(device)
 
-    def forward(self, x, edge_index, edge_weight):
+    def forward(self, x, edge_index, edge_weight=None):
+        # edge_weight is optional: unweighted (binary) graphs — e.g. the DIW
+        # exemplar — don't provide one, and ChebConv treats a missing weight as
+        # all-ones. Without this default, tsl's Predictor (which calls the model
+        # with only the batch's fields) raises a missing-argument TypeError.
         for layer in self.layers:
             x = layer(x, edge_index, edge_weight)
         return x
